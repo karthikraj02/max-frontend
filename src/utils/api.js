@@ -75,6 +75,7 @@ export const userAPI = {
 // Admin
 export const adminAPI = {
   getDashboard: () => API.get('/admin/dashboard'),
+  getAnalytics: () => API.get('/admin/analytics'),
   getUsers: (params) => API.get('/admin/users', { params }),
   updateUser: (id, data) => API.put(`/admin/users/${id}`, data),
   getOrders: (params) => API.get('/admin/orders', { params }),
@@ -82,6 +83,7 @@ export const adminAPI = {
   createProduct: (formData) => API.post('/admin/products', formData, { headers: { 'Content-Type': 'multipart/form-data' } }),
   updateProduct: (id, formData) => API.put(`/admin/products/${id}`, formData, { headers: { 'Content-Type': 'multipart/form-data' } }),
   deleteProduct: (id) => API.delete(`/admin/products/${id}`),
+  toggleProductStock: (id, restoreQty) => API.put(`/admin/products/${id}/toggle-stock`, restoreQty ? { restoreQty } : {}),
 };
 
 export default API;

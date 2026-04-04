@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
 import { Camera, Save } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { userAPI, authAPI } from '../utils/api';
@@ -58,9 +57,9 @@ export default function ProfilePage() {
             {user?.profileImage?.url
               ? <img src={user.profileImage.url} alt="" style={{ width: 80, height: 80, borderRadius: '50%', objectFit: 'cover', border: '2px solid var(--border)' }} />
               : <div style={{ width: 80, height: 80, borderRadius: '50%', background: 'var(--accent-subtle)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 28, fontWeight: 700, color: 'var(--accent)', border: '2px solid var(--border)' }}>{user?.name?.[0]}</div>}
-            <label style={{ position: 'absolute', bottom: 0, right: 0, width: 28, height: 28, borderRadius: '50%', background: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', border: '2px solid var(--bg-card)' }}>
+            <label style={{ position: 'absolute', bottom: 0, right: 0, width: 28, height: 28, borderRadius: '50%', background: uploading ? 'var(--text-tertiary)' : 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: uploading ? 'not-allowed' : 'pointer', border: '2px solid var(--bg-card)' }}>
               <Camera size={13} color="white" />
-              <input type="file" accept="image/*" onChange={handleAvatar} style={{ display: 'none' }} />
+              <input type="file" accept="image/*" onChange={handleAvatar} disabled={uploading} style={{ display: 'none' }} />
             </label>
           </div>
           <div>

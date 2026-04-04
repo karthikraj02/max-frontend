@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Plus, X, Upload } from 'lucide-react';
+import { X, Upload } from 'lucide-react';
 import { adminAPI, productAPI } from '../../utils/api';
 import toast from 'react-hot-toast';
 

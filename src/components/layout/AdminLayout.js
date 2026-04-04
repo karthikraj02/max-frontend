@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Outlet, NavLink, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, Package, ShoppingCart, Users, LogOut, Menu, X, ExternalLink } from 'lucide-react';
+import { LayoutDashboard, Package, ShoppingCart, Users, LogOut, Menu, X, ExternalLink, BarChart2 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
 export default function AdminLayout() {
@@ -13,6 +13,7 @@ export default function AdminLayout() {
     { icon: <Package size={18} />, label: 'Products', to: '/admin/products' },
     { icon: <ShoppingCart size={18} />, label: 'Orders', to: '/admin/orders' },
     { icon: <Users size={18} />, label: 'Users', to: '/admin/users' },
+    { icon: <BarChart2 size={18} />, label: 'Analytics', to: '/admin/analytics' },
   ];
 
   return (

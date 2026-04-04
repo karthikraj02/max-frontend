@@ -1,16 +1,29 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { useAuth } from './AuthContext';
 
 const CartContext = createContext(null);
 
 export const CartProvider = ({ children }) => {
+  const { user } = useAuth();
+  const cartStorageKey = user ? `nexus_cart_${user._id}` : 'nexus_cart_guest';
+
   const [cartItems, setCartItems] = useState(() => {
-    try { return JSON.parse(localStorage.getItem('nexus_cart')) || []; } catch { return []; }
+    try { return JSON.parse(localStorage.getItem(cartStorageKey)) || []; } catch { return []; }
   });
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   useEffect(() => {
-    localStorage.setItem('nexus_cart', JSON.stringify(cartItems));
-  }, [cartItems]);
+    try {
+      const storedCart = JSON.parse(localStorage.getItem(cartStorageKey)) || [];
+      setCartItems(storedCart);
+    } catch {
+      setCartItems([]);
+    }
+  }, [cartStorageKey]);
+
+  useEffect(() => {
+    localStorage.setItem(cartStorageKey, JSON.stringify(cartItems));
+  }, [cartItems, cartStorageKey]);
 
   const addToCart = (product, quantity = 1) => {
     setCartItems(prev => {

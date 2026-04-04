@@ -18,9 +18,13 @@ export default function LoginPage() {
     e.preventDefault();
     setLoading(true);
     try {
-      await login(form.email, form.password);
+      const data = await login(form.email, form.password);
       toast.success('Welcome back!');
-      navigate(redirect);
+      if (data.user?.role === 'admin') {
+        navigate('/admin');
+      } else {
+        navigate(redirect);
+      }
     } catch (err) {
       toast.error(err.response?.data?.message || 'Login failed');
     } finally { setLoading(false); }

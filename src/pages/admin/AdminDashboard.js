@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { Users, Package, ShoppingCart, TrendingUp } from 'lucide-react';
+import { Users, Package, ShoppingCart, TrendingUp, BarChart2 } from 'lucide-react';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
 import { adminAPI } from '../../utils/api';
 
 export default function AdminDashboard() {
   const [stats, setStats] = useState(null);
+  const [analytics, setAnalytics] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => { adminAPI.getDashboard().then(r => setStats(r.data.stats)).catch(()=>{}).finally(()=>setLoading(false)); }, []);
+  useEffect(() => {
+    Promise.all([
+      adminAPI.getDashboard().then(r => setStats(r.data.stats)),
+      adminAPI.getAnalytics().then(r => setAnalytics(r.data.analytics)),
+    ]).catch(() => {}).finally(() => setLoading(false));
+  }, []);
 
   const StatCard = ({ icon, label, value, color }) => (
     <div style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: 24 }}>
@@ -22,6 +29,8 @@ export default function AdminDashboard() {
 
   const STATUS_COLORS = { Pending: '#ff9f0a', Processing: '#6366f1', Paid: '#6366f1', Shipped: '#06b6d4', Delivered: '#30d158', Cancelled: '#ff453a' };
 
+  const chartData = analytics?.monthlyData?.slice(-6) || [];
+
   return (
     <div>
       <h1 style={{ fontSize: 28, fontWeight: 700, letterSpacing: '-0.5px', marginBottom: 32 }}>Dashboard</h1>
@@ -31,6 +40,28 @@ export default function AdminDashboard() {
         <StatCard icon={<Package size={22} />} label="Products" value={stats?.totalProducts?.toLocaleString() || 0} color="#8b5cf6" />
         <StatCard icon={<ShoppingCart size={22} />} label="Total Orders" value={stats?.totalOrders?.toLocaleString() || 0} color="#06b6d4" />
         <StatCard icon={<TrendingUp size={22} />} label="Revenue" value={`₹${(stats?.totalRevenue || 0).toLocaleString()}`} color="#30d158" />
+      </div>
+
+      {/* Revenue Chart */}
+      <div style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: 24, marginBottom: 24 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 20 }}>
+          <BarChart2 size={18} color="var(--accent)" />
+          <h2 style={{ fontSize: 16, fontWeight: 700 }}>Revenue – Last 6 Months</h2>
+        </div>
+        {loading ? <div style={{ height: 200, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-tertiary)' }}>Loading chart...</div> : (
+          <ResponsiveContainer width="100%" height={200}>
+            <BarChart data={chartData} margin={{ top: 4, right: 4, left: 0, bottom: 0 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
+              <XAxis dataKey="month" tick={{ fill: 'var(--text-tertiary)', fontSize: 12 }} axisLine={false} tickLine={false} />
+              <YAxis tick={{ fill: 'var(--text-tertiary)', fontSize: 11 }} axisLine={false} tickLine={false} tickFormatter={v => `₹${(v/1000).toFixed(0)}k`} />
+              <Tooltip
+                contentStyle={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', borderRadius: 8, fontSize: 12 }}
+                formatter={(value) => [`₹${value.toLocaleString()}`, 'Revenue']}
+              />
+              <Bar dataKey="revenue" fill="#6366f1" radius={[4, 4, 0, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+        )}
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
