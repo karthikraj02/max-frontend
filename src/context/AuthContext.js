@@ -5,21 +5,21 @@ const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
-    try { return JSON.parse(localStorage.getItem('nexus_user')); } catch { return null; }
+    try { return JSON.parse(localStorage.getItem('protech_user')); } catch { return null; }
   });
   const [loading, setLoading] = useState(true);
-  const [token, setToken] = useState(() => localStorage.getItem('nexus_token'));
+  const [token, setToken] = useState(() => localStorage.getItem('protech_token'));
 
   const saveAuth = (token, user) => {
-    localStorage.setItem('nexus_token', token);
-    localStorage.setItem('nexus_user', JSON.stringify(user));
+    localStorage.setItem('protech_token', token);
+    localStorage.setItem('protech_user', JSON.stringify(user));
     setToken(token);
     setUser(user);
   };
 
   const logout = useCallback(() => {
-    localStorage.removeItem('nexus_token');
-    localStorage.removeItem('nexus_user');
+    localStorage.removeItem('protech_token');
+    localStorage.removeItem('protech_user');
     setToken(null);
     setUser(null);
   }, []);
@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }) => {
       try {
         const { data } = await authAPI.getMe();
         setUser(data.user);
-        localStorage.setItem('nexus_user', JSON.stringify(data.user));
+        localStorage.setItem('protech_user', JSON.stringify(data.user));
       } catch {
         logout();
       } finally {
@@ -61,7 +61,7 @@ export const AuthProvider = ({ children }) => {
   const updateUser = (updatedUser) => {
     const merged = { ...user, ...updatedUser };
     setUser(merged);
-    localStorage.setItem('nexus_user', JSON.stringify(merged));
+    localStorage.setItem('protech_user', JSON.stringify(merged));
   };
 
   return (

@@ -1,13 +1,13 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: 'http://localhost:5000/api',
+  baseURL: process.env.REACT_APP_API_URL || 'http://localhost:5000/api',
   headers: { 'Content-Type': 'application/json' },
 });
 
 // Attach JWT token to every request
 API.interceptors.request.use((config) => {
-  const token = localStorage.getItem('nexus_token');
+  const token = localStorage.getItem('protech_token');
   if (token) config.headers.Authorization = `Bearer ${token}`;
   return config;
 }, (error) => Promise.reject(error));
@@ -17,8 +17,8 @@ API.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      localStorage.removeItem('nexus_token');
-      localStorage.removeItem('nexus_user');
+      localStorage.removeItem('protech_token');
+      localStorage.removeItem('protech_user');
       window.location.href = '/login';
     }
     return Promise.reject(error);

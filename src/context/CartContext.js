@@ -5,7 +5,7 @@ const CartContext = createContext(null);
 
 export const CartProvider = ({ children }) => {
   const { user } = useAuth();
-  const cartStorageKey = user ? `nexus_cart_${user._id}` : 'nexus_cart_guest';
+  const cartStorageKey = user ? `protech_cart_${user._id}` : 'protech_cart_guest';
 
   const [cartItems, setCartItems] = useState(() => {
     try { return JSON.parse(localStorage.getItem(cartStorageKey)) || []; } catch { return []; }
