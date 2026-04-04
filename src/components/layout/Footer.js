@@ -37,7 +37,11 @@ export default function Footer() {
         </div>
         <div style={{ borderTop: '1px solid var(--border)', paddingTop: 24, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
           <p style={{ fontSize: 13, color: 'var(--text-tertiary)' }}>© {year} ProTech. All rights reserved.</p>
-          <p style={{ fontSize: 13, color: 'var(--text-tertiary)' }}>Crafted with precision. Built for the future.</p>
+          <p style={{ fontSize: 13, color: 'var(--text-tertiary)' }}>
+            <a href="https://beautiful-alpaca-6b1495.netlify.app/" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>
+              Crafted with precision. Built for the future.
+            </a>
+          </p>
         </div>
       </div>
       <style>{`@media(max-width:768px){footer .container > div:first-child{grid-template-columns:1fr 1fr!important;gap:32px!important}}`}</style>
