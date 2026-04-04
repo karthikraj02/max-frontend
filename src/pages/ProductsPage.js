@@ -5,7 +5,7 @@ import { SlidersHorizontal, X, ChevronDown } from 'lucide-react';
 import { productAPI } from '../utils/api';
 import ProductCard from '../components/common/ProductCard';
 
-const CATEGORIES = ['All', 'Electronics', 'Audio', 'Wearables', 'Accessories', 'Computers', 'Phones', 'Tablets', 'Home'];
+const CATEGORIES = ['All', 'Lights', 'Cables', 'Accessories', 'Speakers', 'Mic', 'Home'];
 const SORT_OPTIONS = [
   { value: 'newest', label: 'Newest First' },
   { value: 'price-low', label: 'Price: Low to High' },

@@ -30,7 +30,7 @@ export default function LoginPage() {
     <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'radial-gradient(ellipse 80% 60% at 50% 0%, rgba(99,102,241,0.1) 0%, transparent 60%), var(--bg-primary)', padding: '40px 24px' }}>
       <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} style={{ width: '100%', maxWidth: 400 }}>
         <div style={{ textAlign: 'center', marginBottom: 40 }}>
-          <Link to="/"><div style={{ fontSize: 24, fontWeight: 700, letterSpacing: '-0.5px', marginBottom: 8 }}>NEXUS<span style={{ color: 'var(--accent)' }}>STORE</span></div></Link>
+          <Link to="/"><div style={{ fontSize: 24, fontWeight: 700, letterSpacing: '-0.5px', marginBottom: 8 }}>PRO<span style={{ color: 'var(--accent)' }}>TECH</span></div></Link>
           <h1 style={{ fontSize: 28, fontWeight: 700 }}>Welcome back</h1>
           <p style={{ color: 'var(--text-secondary)', fontSize: 14, marginTop: 6 }}>Sign in to your account</p>
         </div>

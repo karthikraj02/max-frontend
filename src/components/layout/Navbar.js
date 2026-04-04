@@ -62,10 +62,11 @@ export default function Navbar() {
 
   const navLinks = [
     { label: 'Products', to: '/products' },
-    { label: 'Phones', to: '/products?category=Phones' },
-    { label: 'Audio', to: '/products?category=Audio' },
-    { label: 'Wearables', to: '/products?category=Wearables' },
-    { label: 'Computers', to: '/products?category=Computers' },
+    { label: 'Speakers', to: '/products?category=Speakers' },
+    { label: 'Lights', to: '/products?category=Lights' },
+    { label: 'Cables', to: '/products?category=Cables' },
+    { label: 'Accessories', to: '/products?category=Accessories' },
+    { label: 'Mic', to: '/products?category=Mic' },
   ];
 
   return (
@@ -81,7 +82,7 @@ export default function Navbar() {
         <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 24px', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           {/* Logo */}
           <Link to="/" style={{ fontSize: 20, fontWeight: 700, letterSpacing: '-0.5px', flexShrink: 0 }}>
-            NEXUS<span style={{ color: 'var(--accent)' }}>STORE</span>
+            PRO<span style={{ color: 'var(--accent)' }}>TECH</span>
           </Link>
 
           {/* Desktop Nav */}

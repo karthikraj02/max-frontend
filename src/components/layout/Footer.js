@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 export default function Footer() {
   const year = new Date().getFullYear();
   const sections = [
-    { title: 'Shop', links: [{ label: 'All Products', to: '/products' }, { label: 'Phones', to: '/products?category=Phones' }, { label: 'Audio', to: '/products?category=Audio' }, { label: 'Wearables', to: '/products?category=Wearables' }, { label: 'Computers', to: '/products?category=Computers' }] },
+    { title: 'Shop', links: [{ label: 'All Products', to: '/products' }, { label: 'Speakers', to: '/products?category=Speakers' }, { label: 'Lights', to: '/products?category=Lights' }, { label: 'Cables', to: '/products?category=Cables' }, { label: 'Accessories', to: '/products?category=Accessories' }, { label: 'Mic', to: '/products?category=Mic' }] },
     { title: 'Account', links: [{ label: 'Profile', to: '/profile' }, { label: 'Orders', to: '/orders' }, { label: 'Wishlist', to: '/wishlist' }, { label: 'Sign In', to: '/login' }] },
     { title: 'Company', links: [{ label: 'About', to: '#' }, { label: 'Privacy Policy', to: '#' }, { label: 'Terms of Service', to: '#' }, { label: 'Contact', to: '#' }] },
   ];
@@ -16,7 +16,7 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <div style={{ fontSize: 22, fontWeight: 700, letterSpacing: '-0.5px', marginBottom: 16 }}>
-              NEXUS<span style={{ color: 'var(--accent)' }}>STORE</span>
+              PRO<span style={{ color: 'var(--accent)' }}>TECH</span>
             </div>
             <p style={{ fontSize: 14, color: 'var(--text-tertiary)', lineHeight: 1.7, maxWidth: 280 }}>
               Premium tech products for the modern world. Curated, quality-first, delivered to your door.
@@ -36,7 +36,7 @@ export default function Footer() {
           ))}
         </div>
         <div style={{ borderTop: '1px solid var(--border)', paddingTop: 24, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
-          <p style={{ fontSize: 13, color: 'var(--text-tertiary)' }}>© {year} NexusStore. All rights reserved.</p>
+          <p style={{ fontSize: 13, color: 'var(--text-tertiary)' }}>© {year} ProTech. All rights reserved.</p>
           <p style={{ fontSize: 13, color: 'var(--text-tertiary)' }}>Crafted with precision. Built for the future.</p>
         </div>
       </div>

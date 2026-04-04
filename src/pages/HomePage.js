@@ -20,12 +20,13 @@ export default function HomePage() {
   }, []);
 
   const categories = [
-    { name: 'Phones', icon: '📱', color: '#6366f1' },
-    { name: 'Audio', icon: '🎧', color: '#8b5cf6' },
-    { name: 'Wearables', icon: '⌚', color: '#06b6d4' },
-    { name: 'Computers', icon: '💻', color: '#10b981' },
-    { name: 'Tablets', icon: '📲', color: '#f59e0b' },
-    { name: 'Accessories', icon: '🔌', color: '#ef4444' },
+    { name: 'Speakers', icon: '🔊', color: '#6366f1' },
+    { name: 'Lights', icon: '💡', color: '#8b5cf6' },
+    { name: 'Cables', icon: '🔌', color: '#06b6d4' },
+    { name: 'Accessories', icon: '⚙️', color: '#10b981' },
+    { name: 'Mic', icon: '🎙️', color: '#f59e0b' },
+    { name: 'Tablets', icon: '📲', color: '#ef4444' },
+    { name: 'Misc', icon: '📦', color: '#6366f1' },
   ];
 
   return (
