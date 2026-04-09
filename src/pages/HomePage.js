@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, Zap, Shield, Truck, Star } from 'lucide-react';
+import { ArrowRight, Zap, Shield, Truck, Star, Speaker, Lightbulb, Cable, Settings, Mic, Smartphone, Package } from 'lucide-react';
 import { productAPI } from '../utils/api';
 import ProductCard from '../components/common/ProductCard';
 
@@ -20,13 +20,13 @@ export default function HomePage() {
   }, []);
 
   const categories = [
-    { name: 'Speakers', icon: '🔊', color: '#6366f1' },
-    { name: 'Lights', icon: '💡', color: '#8b5cf6' },
-    { name: 'Cables', icon: '🔌', color: '#06b6d4' },
-    { name: 'Accessories', icon: '⚙️', color: '#10b981' },
-    { name: 'Mic', icon: '🎙️', color: '#f59e0b' },
-    { name: 'Tablets', icon: '📲', color: '#ef4444' },
-    { name: 'Misc', icon: '📦', color: '#6366f1' },
+    { name: 'Speakers', icon: Speaker, color: '#6366f1', animate: { scale: [1, 1.1, 1], y: [0, -2, 0] }, duration: 2.5 },
+    { name: 'Lights', icon: Lightbulb, color: '#8b5cf6', animate: { filter: ['drop-shadow(0 0 2px #8b5cf640)', 'drop-shadow(0 0 12px #8b5cf680)', 'drop-shadow(0 0 2px #8b5cf640)'] }, duration: 2 },
+    { name: 'Cables', icon: Cable, color: '#06b6d4', animate: { y: [0, -4, 0] }, duration: 3 },
+    { name: 'Accessories', icon: Settings, color: '#10b981', animate: { rotate: [0, 90] }, duration: 4, ease: 'linear' },
+    { name: 'Mic', icon: Mic, color: '#f59e0b', animate: { y: [0, -3, 0], scale: [1, 1.05, 1] }, duration: 2.5 },
+    { name: 'Tablets', icon: Smartphone, color: '#ef4444', animate: { rotateZ: [0, -5, 5, 0] }, duration: 4 },
+    { name: 'Misc', icon: Package, color: '#6366f1', animate: { y: [0, -5, 0] }, duration: 2.2 },
   ];
 
   return (
@@ -129,12 +129,19 @@ export default function HomePage() {
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(150px,1fr))', gap: 16 }}>
             {categories.map((cat, i) => (
-              <motion.div key={cat.name} initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}>
+              <motion.div key={cat.name} initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}
+                whileHover={{ scale: 1.06, y: -6, boxShadow: `0 16px 32px ${cat.color}30` }}
+                style={{ borderRadius: 'var(--radius-lg)', cursor: 'pointer' }}>
                 <Link to={`/products?category=${cat.name}`}>
-                  <div className="glass-card" style={{ padding: '28px 16px', textAlign: 'center', cursor: 'pointer', transition: 'var(--transition)' }}
-                    onMouseEnter={e => { e.currentTarget.style.borderColor = cat.color + '60'; e.currentTarget.style.transform = 'translateY(-6px)'; e.currentTarget.style.boxShadow = `0 16px 32px ${cat.color}20`; }}
-                    onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}>
-                    <div style={{ fontSize: 36, marginBottom: 12 }}>{cat.icon}</div>
+                  <div className="glass-card" style={{ padding: '28px 16px', textAlign: 'center', cursor: 'pointer', transition: 'border-color 0.2s', border: '1px solid var(--border)' }}
+                    onMouseEnter={e => { e.currentTarget.style.borderColor = cat.color + '60'; e.currentTarget.style.boxShadow = `0 16px 32px ${cat.color}20`; }}
+                    onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.boxShadow = 'none'; }}>
+                    <motion.div
+                      animate={cat.animate}
+                      transition={{ duration: cat.duration, repeat: Infinity, ease: cat.ease || 'easeInOut', repeatType: 'loop' }}
+                      style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', marginBottom: 12, color: cat.color }}>
+                      <cat.icon size={42} strokeWidth={1.5} />
+                    </motion.div>
                     <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-primary)' }}>{cat.name}</div>
                   </div>
                 </Link>
