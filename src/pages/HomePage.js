@@ -94,7 +94,6 @@ export default function HomePage() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(220px,1fr))', gap: 24 }}>
             {[
               { icon: <Zap size={24} />, title: 'Express Delivery', desc: 'Same-day delivery in select cities' },
-              { icon: <Shield size={24} />, title: '2-Year Warranty', desc: 'All products covered end-to-end' },
               { icon: <Truck size={24} />, title: 'Free Shipping', desc: 'On all orders above ₹1,000' },
               { icon: <Star size={24} />, title: 'Premium Quality', desc: 'Only the finest, hand-picked products' },
             ].map((f, i) => (
