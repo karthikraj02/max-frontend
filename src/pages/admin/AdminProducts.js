@@ -34,7 +34,10 @@ export default function AdminProducts() {
       const { data } = await adminAPI.toggleProductStock(product._id);
       setProducts(p => p.map(x => x._id === product._id ? { ...x, stock: data.product.stock } : x));
       toast.success('Marked as out of stock');
-    } catch { toast.error('Failed to update stock'); }
+    } catch (e) { 
+      toast.error('Failed to update stock'); 
+      if(e.response?.data) alert("BACKEND: " + JSON.stringify(e.response.data)); 
+    }
   };
 
   const handleRestoreStock = async (id) => {
@@ -45,7 +48,10 @@ export default function AdminProducts() {
       setProducts(p => p.map(x => x._id === id ? { ...x, stock: data.product.stock } : x));
       setRestoring(null);
       toast.success(`Stock restored to ${data.product.stock}`);
-    } catch { toast.error('Failed to update stock'); }
+    } catch (e) { 
+      toast.error('Failed to update stock');
+      if(e.response?.data) alert("BACKEND: " + JSON.stringify(e.response.data));  
+    }
   };
 
   return (
