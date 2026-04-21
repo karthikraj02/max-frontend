@@ -5,6 +5,7 @@ import { ShoppingBag, Search, User, Heart, Menu, X, LogOut, Settings, Package } 
 import { useAuth } from '../../context/AuthContext';
 import { useCart } from '../../context/CartContext';
 import { productAPI } from '../../utils/api';
+import { DB_TO_UI } from '../../utils/categoryMapper';
 
 export default function Navbar() {
   const { user, logout } = useAuth();
@@ -130,7 +131,7 @@ export default function Navbar() {
                           <img src={s.images?.[0]?.url} alt={s.name} style={{ width: 36, height: 36, borderRadius: 6, objectFit: 'cover' }} />
                           <div>
                             <div style={{ fontSize: 13, fontWeight: 500 }}>{s.name}</div>
-                            <div style={{ fontSize: 11, color: 'var(--text-tertiary)' }}>{s.category}</div>
+                            <div style={{ fontSize: 11, color: 'var(--text-tertiary)' }}>{DB_TO_UI[s.category] || s.category}</div>
                           </div>
                         </div>
                       ))}</div>

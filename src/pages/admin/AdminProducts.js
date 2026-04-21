@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Plus, Edit, Trash2, ToggleLeft, ToggleRight, Check, X as XIcon } from 'lucide-react';
 import { productAPI, adminAPI } from '../../utils/api';
 import toast from 'react-hot-toast';
+import { DB_TO_UI } from '../../utils/categoryMapper';
 
 export default function AdminProducts() {
   const [products, setProducts] = useState([]);
@@ -75,7 +76,7 @@ export default function AdminProducts() {
                       </div>
                     </div>
                   </td>
-                  <td style={{ padding: '12px 16px', fontSize: 13, color: 'var(--text-secondary)' }}>{p.category}</td>
+                  <td style={{ padding: '12px 16px', fontSize: 13, color: 'var(--text-secondary)' }}>{DB_TO_UI[p.category] || p.category}</td>
                   <td style={{ padding: '12px 16px', fontSize: 13, fontWeight: 600 }}>₹{p.price?.toLocaleString()}</td>
                   <td style={{ padding: '12px 16px' }}>
                     <span className={`badge badge-${p.stock > 10 ? 'success' : p.stock > 0 ? 'warning' : 'error'}`}>{p.stock} units</span>

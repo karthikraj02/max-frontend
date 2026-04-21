@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { ShoppingBag, Heart, Star } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 import toast from 'react-hot-toast';
+import { DB_TO_UI } from '../../utils/categoryMapper';
 
 export default function ProductCard({ product, delay = 0 }) {
   const { addToCart, cartItems } = useCart();
@@ -65,7 +66,7 @@ export default function ProductCard({ product, delay = 0 }) {
 
           {/* Info */}
           <div style={{ padding: 16, flex: 1, display: 'flex', flexDirection: 'column', gap: 8 }}>
-            <div style={{ fontSize: 11, color: 'var(--text-tertiary)', textTransform: 'uppercase', letterSpacing: 1 }}>{product.brand} · {product.category}</div>
+            <div style={{ fontSize: 11, color: 'var(--text-tertiary)', textTransform: 'uppercase', letterSpacing: 1 }}>{product.brand} · {DB_TO_UI[product.category] || product.category}</div>
             <div style={{ fontSize: 15, fontWeight: 600, lineHeight: 1.3, color: 'var(--text-primary)' }}>{product.name}</div>
 
             {/* Rating */}

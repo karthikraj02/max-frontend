@@ -7,6 +7,7 @@ import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import ProductCard from '../components/common/ProductCard';
 import toast from 'react-hot-toast';
+import { DB_TO_UI } from '../utils/categoryMapper';
 
 export default function ProductDetailPage() {
   const { id } = useParams();
@@ -104,7 +105,7 @@ export default function ProductDetailPage() {
 
           {/* Info */}
           <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}>
-            <div style={{ fontSize: 12, color: 'var(--accent)', fontWeight: 600, letterSpacing: 2, textTransform: 'uppercase', marginBottom: 8 }}>{product.brand} · {product.category}</div>
+            <div style={{ fontSize: 12, color: 'var(--accent)', fontWeight: 600, letterSpacing: 2, textTransform: 'uppercase', marginBottom: 8 }}>{product.brand} · {DB_TO_UI[product.category] || product.category}</div>
             <h1 style={{ fontSize: 'clamp(24px,3vw,36px)', fontWeight: 700, letterSpacing: '-1px', marginBottom: 16 }}>{product.name}</h1>
 
             {/* Rating */}
