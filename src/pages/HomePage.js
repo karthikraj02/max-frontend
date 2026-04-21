@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, Zap, Shield, Truck, Star, Speaker, Lightbulb, Cable, Settings, Mic, Smartphone, Package } from 'lucide-react';
+import { ArrowRight, Zap, Truck, Star, Speaker, Lightbulb, Cable, Settings, Mic, Smartphone, Package } from 'lucide-react';
 import { productAPI } from '../utils/api';
 import ProductCard from '../components/common/ProductCard';
 
@@ -78,10 +78,10 @@ export default function HomePage() {
           </motion.p>
 
           <motion.div {...fadeUp} transition={{ delay: 0.3 }} style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}>
-            <button className="btn-primary" style={{ fontSize: 16, padding: '14px 32px' }} onClick={() => navigate('/products')}>
+            <button className="btn-primary" style={{ fontSize: 16, padding: '14px 32px' }} onClick={() => navigate('/products')}>  
               Shop Now <ArrowRight size={16} />
             </button>
-            <button className="btn-secondary" style={{ fontSize: 16, padding: '14px 32px' }} onClick={() => navigate('/products?featured=true')}>
+            <button className="btn-secondary" style={{ fontSize: 16, padding: '14px 32px' }} onClick={() => navigate('/products?featured=true')}>  
               Explore Featured
             </button>
           </motion.div>
@@ -90,25 +90,25 @@ export default function HomePage() {
 
       {/* Features */}
       <section style={{ padding: '80px 0', background: 'var(--bg-secondary)' }}>
-        <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(220px,1fr))', gap: 24 }}>
-            {[
-              { icon: <Zap size={24} />, title: 'Express Delivery', desc: 'Same-day delivery in select cities' },
-              { icon: <Truck size={24} />, title: 'Free Shipping', desc: 'On all orders above ₹1,000' },
-              { icon: <Star size={24} />, title: 'Premium Quality', desc: 'Only the finest, hand-picked products' },
-            ].map((f, i) => (
-              <motion.div key={i} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1, duration: 0.5 }}>
+        <div className="container"> 
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(220px,1fr))', gap: 24 }}>  
+            {[  
+              { icon: <Zap size={24} />, title: 'Express Delivery', desc: 'Same-day delivery in select cities' }, 
+              { icon: <Truck size={24} />, title: 'Free Shipping', desc: 'On all orders above ₹1,000' }, 
+              { icon: <Star size={24} />, title: 'Premium Quality', desc: 'Only the finest, hand-picked products' }, 
+            ].map((f, i) => ( 
+              <motion.div key={i} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1, duration: 0.5 }}> 
                 <div className="glass-card" style={{ padding: 24, textAlign: 'center', transition: 'var(--transition)' }}
                   onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--border-hover)'; e.currentTarget.style.transform = 'translateY(-4px)'; }}
                   onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.transform = 'translateY(0)'; }}>
-                  <div style={{ width: 48, height: 48, borderRadius: 12, background: 'var(--accent-subtle)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px', color: 'var(--accent)' }}>
+                  <div style={{ width: 48, height: 48, borderRadius: 12, background: 'var(--accent-subtle)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>
                     {f.icon}
                   </div>
                   <div style={{ fontSize: 15, fontWeight: 600, marginBottom: 6 }}>{f.title}</div>
                   <div style={{ fontSize: 13, color: 'var(--text-tertiary)', lineHeight: 1.5 }}>{f.desc}</div>
                 </div>
               </motion.div>
-            ))}
+            ))}  
           </div>
         </div>
       </section>
@@ -116,7 +116,7 @@ export default function HomePage() {
       {/* Categories */}
       <section style={{ padding: '80px 0' }}>
         <div className="container">
-          <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ marginBottom: 48, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
+          <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ marginBottom: 48, display: 'flex', justifyContent: 'space-between', alignItems: 'end', flexWrap: 'wrap', gap: 18 }}>
             <div>
               <div style={{ fontSize: 12, color: 'var(--accent)', fontWeight: 600, letterSpacing: 2, textTransform: 'uppercase', marginBottom: 8 }}>BROWSE BY</div>
               <h2 style={{ fontSize: 'clamp(28px,4vw,44px)', fontWeight: 700, letterSpacing: '-1px' }}>Categories</h2>
@@ -126,18 +126,18 @@ export default function HomePage() {
             </Link>
           </motion.div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(150px,1fr))', gap: 16 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(150px,1fr))', gap: 16 }}>  
             {categories.map((cat, i) => (
               <motion.div key={cat.name} initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}
                 whileHover={{ scale: 1.06, y: -6, boxShadow: `0 16px 32px ${cat.color}30` }}
                 style={{ borderRadius: 'var(--radius-lg)', cursor: 'pointer' }}>
-                <Link to={`/products?category=${cat.name}`}>
-                  <div className="glass-card" style={{ padding: '28px 16px', textAlign: 'center', cursor: 'pointer', transition: 'border-color 0.2s', border: '1px solid var(--border)' }}
-                    onMouseEnter={e => { e.currentTarget.style.borderColor = cat.color + '60'; e.currentTarget.style.boxShadow = `0 16px 32px ${cat.color}20`; }}
+                <Link to={`/products?category=${cat.name}`}>  
+                  <div className="glass-card" style={{ padding: '28px 16px', textAlign: 'center', cursor: 'pointer', transition: 'border-color 0.2s', border: '1px solid var(--border)' }}  
+                    onMouseEnter={e => { e.currentTarget.style.borderColor = cat.color + '60'; e.currentTarget.style.boxShadow = `0 16px 32px ${cat.color}20`; }}  
                     onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.boxShadow = 'none'; }}>
-                    <motion.div
-                      animate={cat.animate}
-                      transition={{ duration: cat.duration, repeat: Infinity, ease: cat.ease || 'easeInOut', repeatType: 'loop' }}
+                    <motion.div  
+                      animate={cat.animate}  
+                      transition={{ duration: cat.duration, repeat: Infinity, ease: cat.ease || 'easeInOut', repeatType: 'loop' }}  
                       style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', marginBottom: 12, color: cat.color }}>
                       <cat.icon size={42} strokeWidth={1.5} />
                     </motion.div>
@@ -145,15 +145,15 @@ export default function HomePage() {
                   </div>
                 </Link>
               </motion.div>
-            ))}
+            ))}  
           </div>
         </div>
       </section>
 
       {/* Featured Products */}
       <section style={{ padding: '80px 0', background: 'var(--bg-secondary)' }}>
-        <div className="container">
-          <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ marginBottom: 48, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
+        <div className="container">  
+          <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ marginBottom: 48, display: 'flex', justifyContent: 'space-between', alignItems: 'end', flexWrap: 'wrap', gap: 18 }}>
             <div>
               <div style={{ fontSize: 12, color: 'var(--accent)', fontWeight: 600, letterSpacing: 2, textTransform: 'uppercase', marginBottom: 8 }}>HAND-PICKED</div>
               <h2 style={{ fontSize: 'clamp(28px,4vw,44px)', fontWeight: 700, letterSpacing: '-1px' }}>Featured Products</h2>
@@ -186,7 +186,7 @@ export default function HomePage() {
 
       {/* CTA Banner */}
       <section style={{ padding: '80px 0' }}>
-        <div className="container">
+        <div className="container">  
           <motion.div initial={{ opacity: 0, y: 32 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <div style={{
               borderRadius: 'var(--radius-xl)', padding: '64px 48px', textAlign: 'center',
@@ -200,7 +200,7 @@ export default function HomePage() {
               <p style={{ fontSize: 18, color: 'var(--text-secondary)', marginBottom: 32, maxWidth: 480, margin: '0 auto 32px' }}>
                 Join thousands of satisfied customers. Discover products that change everything.
               </p>
-              <button className="btn-primary" style={{ fontSize: 16, padding: '14px 36px' }} onClick={() => navigate('/products')}>
+              <button className="btn-primary" style={{ fontSize: 16, padding: '14px 36px' }} onClick={() => navigate('/products')}>  
                 Shop Now <ArrowRight size={16} />
               </button>
             </div>
