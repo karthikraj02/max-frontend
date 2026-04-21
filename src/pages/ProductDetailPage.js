@@ -64,12 +64,12 @@ export default function ProductDetailPage() {
     if (!user) { toast.error('Please sign in to review'); return; }
     setSubmittingReview(true);
     try {
-      await productAPI.createReview(product._id, reviewForm);
+      await productAPI.createReview(id, reviewForm);
       toast.success('Review submitted!');
       const { data } = await productAPI.getById(id);
       setProduct(data.product);
       setReviewForm({ rating: 5, comment: '' });
-    } catch (err) { toast.error(err.response?.data?.message || 'Failed to submit review'); }
+    } catch (err) { toast.error(err.response?.data?.message || err.message || 'Failed to submit review'); }
     finally { setSubmittingReview(false); }
   };
 
@@ -218,12 +218,12 @@ export default function ProductDetailPage() {
             </form>
           )}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-            {product.reviews?.length === 0 ? (
+            {!product.reviews?.some(r => r.createdAt) ? (
               <p style={{ color: 'var(--text-tertiary)' }}>No reviews yet. Be the first!</p>
-            ) : product.reviews?.map(r => (
+            ) : product.reviews?.filter(r => r.createdAt).map(r => (
               <div key={r._id} className="glass-card" style={{ padding: 20 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
-                  <div style={{ fontWeight: 600, fontSize: 14 }}>{r.name}</div>
+                  <div style={{ fontWeight: 600, fontSize: 14 }}>{r.name || 'Anonymous User'}</div>
                   <div style={{ display: 'flex', gap: 2 }}>
                     {[1,2,3,4,5].map(s => <Star key={s} size={13} fill={s <= r.rating ? '#ff9f0a' : 'none'} stroke={s <= r.rating ? '#ff9f0a' : '#555'} />)}
                   </div>
