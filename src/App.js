@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
@@ -35,13 +35,13 @@ import AdminAnalytics from './pages/admin/AdminAnalytics';
 
 const ProtectedRoute = ({ children }) => {
   const { user, loading } = useAuth();
-  if (loading) return <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', color: '#6366f1' }}>Loading...</div>;
+  if (loading) return null; // Avoid duplicate loading screens
   return user ? children : <Navigate to="/login" replace />;
 };
 
 const AdminRoute = ({ children }) => {
   const { user, loading } = useAuth();
-  if (loading) return <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', color: '#6366f1' }}>Loading...</div>;
+  if (loading) return null; 
   if (!user) return <Navigate to="/login" replace />;
   if (user.role !== 'admin') return <Navigate to="/" replace />;
   return children;
@@ -54,6 +54,30 @@ const PublicLayout = ({ children }) => (
     <Footer />
   </>
 );
+
+const PageTransitionLoader = ({ children }) => {
+  const location = useLocation();
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1200); 
+
+    return () => clearTimeout(timer);
+  }, [location.pathname]);
+
+  if (loading) {
+    return (
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', background: 'var(--bg-primary)' }}>
+        <img src="/loading-cat.gif" alt="Loading..." style={{ width: 150, objectFit: 'contain' }} />
+      </div>
+    );
+  }
+
+  return children;
+};
 
 function AppRoutes() {
   return (
@@ -96,7 +120,9 @@ export default function App() {
     <BrowserRouter>
       <AuthProvider>
         <CartProvider>
-          <AppRoutes />
+          <PageTransitionLoader>
+            <AppRoutes />
+          </PageTransitionLoader>
           <Toaster
             position="top-right"
             toastOptions={{
