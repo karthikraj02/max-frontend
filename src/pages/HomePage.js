@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, Zap, Truck, Star, Speaker, Lightbulb, Cable, Settings, Mic, Smartphone, Package } from 'lucide-react';
+import { ArrowRight, Zap, Truck, Star, Speaker, Settings, Package, Sliders, Disc, Volume2, Radio } from 'lucide-react';
 import { productAPI } from '../utils/api';
 import ProductCard from '../components/common/ProductCard';
 
@@ -20,13 +20,13 @@ export default function HomePage() {
   }, []);
 
   const categories = [
-    { name: 'Speakers', icon: Speaker, color: '#6366f1', animate: { scale: [1, 1.1, 1], y: [0, -2, 0] }, duration: 2.5 },
-    { name: 'Lights', icon: Lightbulb, color: '#8b5cf6', animate: { filter: ['drop-shadow(0 0 2px #8b5cf640)', 'drop-shadow(0 0 12px #8b5cf680)', 'drop-shadow(0 0 2px #8b5cf640)'] }, duration: 2 },
-    { name: 'Cables', icon: Cable, color: '#06b6d4', animate: { y: [0, -4, 0] }, duration: 3 },
-    { name: 'Accessories', icon: Settings, color: '#10b981', animate: { rotate: [0, 90] }, duration: 4, ease: 'linear' },
-    { name: 'Mic', icon: Mic, color: '#f59e0b', animate: { y: [0, -3, 0], scale: [1, 1.05, 1] }, duration: 2.5 },
-    { name: 'Tablets', icon: Smartphone, color: '#ef4444', animate: { rotateZ: [0, -5, 5, 0] }, duration: 4 },
-    { name: 'Misc', icon: Package, color: '#6366f1', animate: { y: [0, -5, 0] }, duration: 2.2 },
+    { name: 'LOUDSPEAKERS', icon: Speaker, color: '#6366f1', animate: { scale: [1, 1.1, 1], y: [0, -2, 0] }, duration: 2.5 },
+    { name: 'SPEAKERS', icon: Volume2, color: '#8b5cf6', animate: { filter: ['drop-shadow(0 0 2px #8b5cf640)', 'drop-shadow(0 0 12px #8b5cf680)', 'drop-shadow(0 0 2px #8b5cf640)'] }, duration: 2 },
+    { name: 'CABINETS', icon: Package, color: '#06b6d4', animate: { y: [0, -4, 0] }, duration: 3 },
+    { name: 'AMPLIFIERS', icon: Radio, color: '#10b981', animate: { rotate: [0, -5, 5, 0] }, duration: 4 },
+    { name: 'MIXERS', icon: Sliders, color: '#f59e0b', animate: { y: [0, -3, 0], scale: [1, 1.05, 1] }, duration: 2.5 },
+    { name: 'DJ CONSOLES', icon: Disc, color: '#ef4444', animate: { rotate: [0, 90] }, duration: 4, ease: 'linear' },
+    { name: 'OTHERS', icon: Settings, color: '#6366f1', animate: { y: [0, -5, 0] }, duration: 2.2 },
   ];
 
   return (

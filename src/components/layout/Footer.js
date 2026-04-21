@@ -7,7 +7,7 @@ export default function Footer() {
   const [showContact, setShowContact] = useState(false);
   const year = new Date().getFullYear();
   const sections = [
-    { title: 'Shop', links: [{ label: 'All Products', to: '/products' }, { label: 'Speakers', to: '/products?category=Speakers' }, { label: 'Lights', to: '/products?category=Lights' }, { label: 'Cables', to: '/products?category=Cables' }, { label: 'Accessories', to: '/products?category=Accessories' }, { label: 'Mic', to: '/products?category=Mic' }] },
+    { title: 'Shop', links: [{ label: 'All Products', to: '/products' }, { label: 'Loudspeakers', to: '/products?category=LOUDSPEAKERS' }, { label: 'Speakers', to: '/products?category=SPEAKERS' }, { label: 'Cabinets', to: '/products?category=CABINETS' }, { label: 'Amplifiers', to: '/products?category=AMPLIFIERS' }, { label: 'Mixers', to: '/products?category=MIXERS' }] },
     { title: 'Account', links: [{ label: 'Profile', to: '/profile' }, { label: 'Orders', to: '/orders' }, { label: 'Wishlist', to: '/wishlist' }, { label: 'Sign In', to: '/login' }] },
     { title: 'Company', links: [{ label: 'About', to: '#' }, { label: 'Privacy Policy', to: '#' }, { label: 'Terms of Service', to: '#' }, { label: 'Contact', action: () => setShowContact(true) }] },
   ];

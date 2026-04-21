@@ -62,11 +62,11 @@ export default function Navbar() {
 
   const navLinks = [
     { label: 'Products', to: '/products' },
-    { label: 'Speakers', to: '/products?category=Speakers' },
-    { label: 'Lights', to: '/products?category=Lights' },
-    { label: 'Cables', to: '/products?category=Cables' },
-    { label: 'Accessories', to: '/products?category=Accessories' },
-    { label: 'Mic', to: '/products?category=Mic' },
+    { label: 'Loudspeakers', to: '/products?category=LOUDSPEAKERS' },
+    { label: 'Speakers', to: '/products?category=SPEAKERS' },
+    { label: 'Cabinets', to: '/products?category=CABINETS' },
+    { label: 'Amplifiers', to: '/products?category=AMPLIFIERS' },
+    { label: 'Mixers', to: '/products?category=MIXERS' },
   ];
 
   return (

@@ -4,7 +4,7 @@ import { X, Upload } from 'lucide-react';
 import { adminAPI, productAPI } from '../../utils/api';
 import toast from 'react-hot-toast';
 
-const CATEGORIES = ['Electronics','Audio','Wearables','Accessories','Computers','Phones','Tablets','Home','Other'];
+const CATEGORIES = ['LOUDSPEAKERS','SPEAKERS','CABINETS','AMPLIFIERS','MIXERS','DJ CONSOLES','OTHERS'];
 const labelStyle = { fontSize: 12, fontWeight: 600, color: 'var(--text-tertiary)', textTransform: 'uppercase', letterSpacing: 0.5, display: 'block', marginBottom: 6 };
 const inputStyle = { width: '100%', padding: '12px 16px', background: 'var(--bg-elevated)', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)', color: 'var(--text-primary)', fontSize: 14, outline: 'none' };
 
@@ -14,7 +14,7 @@ export default function AdminProductForm() {
   const isEdit = Boolean(id);
   const [loading, setLoading] = useState(false);
   const [images, setImages] = useState([]);
-  const [form, setForm] = useState({ name:'',shortDescription:'',description:'',price:'',originalPrice:'',discount:0,category:'Electronics',brand:'',stock:'',sku:'',isFeatured:false,features:'',specifications:'' });
+  const [form, setForm] = useState({ name:'',shortDescription:'',description:'',price:'',originalPrice:'',discount:0,category:'LOUDSPEAKERS',brand:'',stock:'',sku:'',isFeatured:false,features:'',specifications:'' });
 
   useEffect(() => {
     if (isEdit) {
