@@ -31,6 +31,7 @@ export default function AdminProductForm() {
       const fd = new FormData();
       Object.keys(form).forEach(k => {
         if (['features', 'specifications', 'images'].includes(k)) return;
+        if (form[k] === null || form[k] === undefined) return;
         fd.append(k, typeof form[k] === 'boolean' ? form[k].toString() : form[k]);
       });
 
