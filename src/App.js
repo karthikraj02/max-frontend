@@ -68,15 +68,16 @@ const PageTransitionLoader = ({ children }) => {
     return () => clearTimeout(timer);
   }, [location.pathname]);
 
-  if (loading) {
-    return (
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', background: 'var(--bg-primary)' }}>
-        <img src="/loading-cat.gif" alt="Loading..." style={{ width: 150, objectFit: 'contain' }} />
-      </div>
-    );
-  }
-
-  return children;
+  return (
+    <>
+      {loading && (
+        <div style={{ position: 'fixed', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0, 0, 0, 0.6)', backdropFilter: 'blur(3px)', zIndex: 99999 }}>
+          <img src="/loading-cat.gif" alt="Loading..." style={{ width: 150, objectFit: 'contain' }} />
+        </div>
+      )}
+      {children}
+    </>
+  );
 };
 
 function AppRoutes() {
