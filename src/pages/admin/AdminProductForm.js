@@ -51,7 +51,14 @@ export default function AdminProductForm() {
       if (isEdit) { await adminAPI.updateProduct(id, fd); toast.success('Product updated!'); }
       else { await adminAPI.createProduct(fd); toast.success('Product created!'); }
       navigate('/admin/products');
-    } catch (err) { toast.error(err.response?.data?.message || 'Failed'); }
+    } catch (err) { 
+      const errMsg = err.response?.data?.message || err.message || 'Failed';
+      toast.error(errMsg); 
+      console.error(err);
+      if (err.response?.data) {
+        alert("BACKEND ERROR: " + JSON.stringify(err.response.data));
+      }
+    }
     finally { setLoading(false); }
   };
 
