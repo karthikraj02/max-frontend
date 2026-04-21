@@ -29,8 +29,13 @@ export default function AdminProductForm() {
     e.preventDefault(); setLoading(true);
     try {
       const fd = new FormData();
-      const payload = { ...form, features: form.features.split('\n').filter(Boolean), specifications: form.specifications.split('\n').filter(Boolean).map(s => { const [k,...v] = s.split(':'); return { key: k.trim(), value: v.join(':').trim() }; }) };
-      Object.entries(payload).forEach(([k, v]) => fd.append(k, typeof v === 'object' ? JSON.stringify(v) : v));
+      const features = form.features.split('\n').filter(Boolean);
+      const specifications = form.specifications.split('\n').filter(Boolean).map(s => { const [k,...v] = s.split(':'); return { key: k.trim(), value: v.join(':').trim() }; });
+      const payload = { ...form, features, specifications };
+      Object.entries(payload).forEach(([k, v]) => {
+        if (Array.isArray(v) || (typeof v === 'object' && v !== null)) fd.append(k, JSON.stringify(v));
+        else fd.append(k, v);
+      });
       images.forEach(img => fd.append('images', img));
       if (isEdit) { await adminAPI.updateProduct(id, fd); toast.success('Product updated!'); }
       else { await adminAPI.createProduct(fd); toast.success('Product created!'); }
