@@ -29,13 +29,23 @@ export default function AdminProductForm() {
     e.preventDefault(); setLoading(true);
     try {
       const fd = new FormData();
-      const features = form.features.split('\n').filter(Boolean);
-      const specifications = form.specifications.split('\n').filter(Boolean).map(s => { const [k,...v] = s.split(':'); return { key: k.trim(), value: v.join(':').trim() }; });
-      const payload = { ...form, features, specifications };
-      Object.entries(payload).forEach(([k, v]) => {
-        if (Array.isArray(v) || (typeof v === 'object' && v !== null)) fd.append(k, JSON.stringify(v));
-        else fd.append(k, v);
+      Object.keys(form).forEach(k => {
+        if (['features', 'specifications', 'images'].includes(k)) return;
+        fd.append(k, typeof form[k] === 'boolean' ? form[k].toString() : form[k]);
       });
+
+      const features = form.features.split('\n').filter(Boolean);
+      features.forEach((f, i) => fd.append(`features[${i}]`, f));
+
+      const specifications = form.specifications.split('\n').filter(Boolean).map(s => { 
+        const [k,...v] = s.split(':'); 
+        return { key: k.trim(), value: v.join(':').trim() }; 
+      });
+      specifications.forEach((s, i) => {
+        fd.append(`specifications[${i}][key]`, s.key);
+        fd.append(`specifications[${i}][value]`, s.value);
+      });
+
       images.forEach(img => fd.append('images', img));
       if (isEdit) { await adminAPI.updateProduct(id, fd); toast.success('Product updated!'); }
       else { await adminAPI.createProduct(fd); toast.success('Product created!'); }
