@@ -33,7 +33,18 @@ export default function ProductsPage() {
     setLoading(true);
     try {
       const params = { page, limit: 12, sort };
-      if (category !== 'All') params.category = category;
+      if (category !== 'All') {
+        const categoryMap = {
+          'LOUDSPEAKERS': 'Audio',
+          'SPEAKERS': 'Audio',
+          'CABINETS': 'Accessories',
+          'AMPLIFIERS': 'Electronics',
+          'MIXERS': 'Other',
+          'DJ CONSOLES': 'Electronics',
+          'OTHERS': 'Other'
+        };
+        params.category = categoryMap[category] || category;
+      }
       if (search) params.search = search;
       if (minPrice) params.minPrice = minPrice;
       if (maxPrice) params.maxPrice = maxPrice;

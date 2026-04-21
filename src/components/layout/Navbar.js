@@ -109,9 +109,10 @@ export default function Navbar() {
               <AnimatePresence>
                 {searchOpen && (
                   <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
+                    className="search-dropdown-wrapper"
                     style={{
                       position: 'absolute', top: '100%', right: 0, marginTop: 8,
-                      width: 320, background: 'var(--bg-card)',
+                      width: 320, background: 'var(--bg-card)', zIndex: 1001,
                       border: '1px solid var(--border)', borderRadius: 'var(--radius-md)',
                       padding: 12, boxShadow: 'var(--shadow-lg)',
                     }}>
@@ -240,6 +241,14 @@ export default function Navbar() {
         @media (max-width: 768px) {
           .desktop-nav { display: none !important; }
           .mobile-menu-btn { display: flex !important; }
+          .search-dropdown-wrapper {
+            position: fixed !important;
+            top: var(--nav-height) !important;
+            left: 16px !important;
+            right: 16px !important;
+            width: auto !important;
+            margin-top: 8px !important;
+          }
         }
       `}</style>
     </>

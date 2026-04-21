@@ -20,7 +20,14 @@ export default function AdminProductForm() {
     if (isEdit) {
       productAPI.getById(id).then(r => {
         const p = r.data.product;
-        setForm({ ...p, features: p.features?.join('\n') || '', specifications: p.specifications?.map(s => `${s.key}:${s.value}`).join('\n') || '' });
+        // Reverse mapping to keep frontend UI consistent
+        const reverseCategoryMap = {
+          'Audio': 'LOUDSPEAKERS', 
+          'Accessories': 'CABINETS',
+          'Electronics': 'DJ CONSOLES',
+          'Other': 'OTHERS'
+        };
+        setForm({ ...p, category: reverseCategoryMap[p.category] || 'LOUDSPEAKERS', features: p.features?.join('\n') || '', specifications: p.specifications?.map(s => `${s.key}:${s.value}`).join('\n') || '' });
       }).catch(() => navigate('/admin/products'));
     }
   }, [id, isEdit, navigate]);
@@ -29,10 +36,22 @@ export default function AdminProductForm() {
     e.preventDefault(); setLoading(true);
     try {
       const fd = new FormData();
+      const categoryMap = {
+        'LOUDSPEAKERS': 'Audio',
+        'SPEAKERS': 'Audio',
+        'CABINETS': 'Accessories',
+        'AMPLIFIERS': 'Electronics',
+        'MIXERS': 'Other',
+        'DJ CONSOLES': 'Electronics',
+        'OTHERS': 'Other'
+      };
+
       Object.keys(form).forEach(k => {
         if (['features', 'specifications', 'images'].includes(k)) return;
         if (form[k] === null || form[k] === undefined) return;
-        fd.append(k, typeof form[k] === 'boolean' ? form[k].toString() : form[k]);
+        let val = form[k];
+        if (k === 'category') val = categoryMap[val] || val;
+        fd.append(k, typeof val === 'boolean' ? val.toString() : val);
       });
 
       const features = form.features.split('\n').filter(Boolean);
