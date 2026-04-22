@@ -1,66 +1,19 @@
+// src/pages/CheckoutPage.js
+
 import React from 'react';
+import CheckoutButton from '../components/CheckoutButton'; // <-- New, see code below
 
-const CheckoutButton = ({ totalAmount }) => {
-  // This should be the amount in INR (e.g., 111 for ₹111)
-  const handlePayment = async () => {
-    try {
-      // 1. Hit your backend to create a Razorpay order
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/payment/create-order`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ amount: totalAmount }),
-        }
-      );
-
-      const data = await response.json();
-      if (!data.orderId) {
-        alert(data.error || "Order creation failed");
-        return;
-      }
-
-      // 2. Log your Razorpay Key (DEBUGGING)
-      console.log("RAZORPAY KEY", process.env.REACT_APP_RAZORPAY_KEY_ID);
-
-      // 3. Prepare Razorpay options
-      const options = {
-        key: process.env.REACT_APP_RAZORPAY_KEY_ID,
-        amount: data.amount, // amount in paise
-        currency: data.currency,
-        order_id: data.orderId,
-        name: "ProTech",
-        description: `Order #${data.orderId}`,
-        handler: function (response) {
-          // TODO: You can verify payment or show confirmation here!
-          alert("Payment successful! Payment ID: " + response.razorpay_payment_id);
-        },
-        prefill: {
-          // Optionally prefill customer info
-          // name: "Customer Name",
-          // email: "customer@example.com",
-          // contact: "9999999999",
-        },
-        theme: {
-          color: "#1A202C",
-        },
-      };
-
-      console.log("Razorpay Options", options);
-
-      const rzp = new window.Razorpay(options);
-      rzp.open();
-    } catch (error) {
-      alert("Payment init error: " + error.message);
-      console.error(error);
-    }
-  };
+const CheckoutPage = () => {
+  // You will probably get totalAmount from CartContext or your checkout state
+  const totalAmount = 111; // Replace with actual amount logic!
 
   return (
-    <button onClick={handlePayment}>
-      Pay ₹{totalAmount}
-    </button>
+    <div>
+      <h2>Checkout</h2>
+      {/* Your shipping, order summary, etc. */}
+      <CheckoutButton totalAmount={totalAmount} />
+    </div>
   );
 };
 
-export default CheckoutButton;
+export default CheckoutPage;
