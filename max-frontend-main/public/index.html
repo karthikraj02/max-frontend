@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="ProTech - Premium Tech Marketplace" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.png" />
+    <title>ProTech</title>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <style>
+      #initial-loader {
+        position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
+        background: transparent; z-index: 99999;
+      }
+    </style>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root">
+      <div id="initial-loader">
+        <img src="%PUBLIC_URL%/loading-cat.gif" alt="Loading..." style="width: 200px; height: 200px; object-fit: contain;" />
+      </div>
+    </div>
+  </body>
+</html>
