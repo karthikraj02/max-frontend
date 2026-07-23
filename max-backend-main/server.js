@@ -37,8 +37,9 @@ app.use(cors({
 
 // ================= DATABASE CONNECTION (FIXED) =================
 let cachedConnection = null;
+let startupError = null;
 
-const connectDB = async () => {
+const connectDB = async (mongoUri) => {
   // If mongoose is already connected, reuse it
   if (mongoose.connection.readyState === 1) {
     return;
@@ -51,7 +52,7 @@ const connectDB = async () => {
   }
 
   try {
-    cachedConnection = mongoose.connect(process.env.MONGO_URI, {
+    cachedConnection = mongoose.connect(mongoUri, {
       bufferCommands: false,
       serverSelectionTimeoutMS: 5000,
       socketTimeoutMS: 45000,
@@ -66,11 +67,29 @@ const connectDB = async () => {
   }
 };
 
-// ================= DB MIDDLEWARE (IMPORTANT) =================
-// Only require DB for API routes, not health/root
+const getMongoUri = () => {
+  const mongoUri = process.env.MONGO_URI;
+  if (!mongoUri) {
+    throw new Error('MONGO_URI is missing. Set it in your environment variables before starting the server.');
+  }
+  return mongoUri;
+};
+
+const dbReadyPromise = (async () => {
+  try {
+    const mongoUri = getMongoUri();
+    await connectDB(mongoUri);
+  } catch (error) {
+    startupError = error;
+    throw error;
+  }
+})();
+dbReadyPromise.catch(() => {});
+
+// ================= DB MIDDLEWARE =================
 app.use('/api', async (req, res, next) => {
   try {
-    await connectDB();
+    await dbReadyPromise;
     next();
   } catch (err) {
     console.error("DB middleware error:", err.message);
@@ -108,16 +127,8 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // ================= HEALTH ROUTE =================
 app.get('/health', async (req, res) => {
-  const mongoUri = process.env.MONGO_URI;
-  let dbStatus = 'disconnected';
-  let dbError = null;
-
-  try {
-    await connectDB();
-    dbStatus = 'connected';
-  } catch (err) {
-    dbError = err.message;
-  }
+  const dbStatus = mongoose.connection.readyState === 1 ? 'connected' : 'disconnected';
+  const dbError = startupError ? startupError.message : null;
 
   res.json({
     status: dbStatus === 'connected' ? 'OK' : 'ERROR',
@@ -126,8 +137,7 @@ app.get('/health', async (req, res) => {
     db: {
       status: dbStatus,
       readyState: mongoose.connection.readyState,
-      uriSet: !!mongoUri,
-      uriPrefix: mongoUri ? mongoUri.substring(0, 20) + '...' : 'NOT SET',
+      uriSet: !!process.env.MONGO_URI,
       error: dbError,
     }
   });
@@ -163,7 +173,14 @@ app.use(errorHandler);
 
 if (process.env.NODE_ENV !== 'production' && !process.env.VERCEL) {
   const PORT = process.env.PORT || 5000;
-  app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+  dbReadyPromise
+    .then(() => {
+      app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+    })
+    .catch((error) => {
+      console.error(`❌ Server startup failed: ${error.message}`);
+      process.exit(1);
+    });
 }
 
 // ================= EXPORT =================
