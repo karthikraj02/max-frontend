@@ -1,26 +1,15 @@
 // src/components/CheckoutButton.js
 import React from 'react';
+import { paymentAPI } from '../utils/api';
 
 const CheckoutButton = ({ totalAmount }) => {
   const handlePayment = async () => {
     try {
-      // Call backend to create order
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/payment/create-order`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ amount: totalAmount }),
-        }
-      );
-      const data = await response.json();
+      const { data } = await paymentAPI.createRazorpayOrder({ amount: totalAmount });
       if (!data.orderId) {
         alert(data.error || 'Order creation failed');
         return;
       }
-
-      // Razorpay key debug
-      console.log('RAZORPAY KEY', process.env.REACT_APP_RAZORPAY_KEY_ID);
 
       const options = {
         key: process.env.REACT_APP_RAZORPAY_KEY_ID,
@@ -36,7 +25,6 @@ const CheckoutButton = ({ totalAmount }) => {
         theme: { color: "#1A202C" },
       };
 
-      console.log('Razorpay Options', options);
       const rzp = new window.Razorpay(options);
       rzp.open();
     } catch (error) {

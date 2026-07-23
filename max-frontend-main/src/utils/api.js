@@ -1,7 +1,30 @@
 import axios from 'axios';
 
+const normalizeApiBaseUrl = (value) => {
+  const trimmed = value?.trim();
+  if (!trimmed) return null;
+  const withoutTrailingSlashes = trimmed.replace(/\/+$/, '');
+  return withoutTrailingSlashes.endsWith('/api')
+    ? withoutTrailingSlashes
+    : `${withoutTrailingSlashes}/api`;
+};
+
+export const getApiBaseUrl = () => {
+  const configuredBaseUrl = normalizeApiBaseUrl(
+    process.env.REACT_APP_API_URL || process.env.REACT_APP_BACKEND_URL
+  );
+  if (configuredBaseUrl) return configuredBaseUrl;
+
+  if (typeof window !== 'undefined') {
+    const isLocalhost = ['localhost', '127.0.0.1'].includes(window.location.hostname);
+    if (isLocalhost) return 'http://localhost:5000/api';
+  }
+
+  return '/api';
+};
+
 const API = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || 'https://max-frontend-gdep.vercel.app/api',
+  baseURL: getApiBaseUrl(),
   headers: { 'Content-Type': 'application/json' },
 });
 
@@ -16,6 +39,14 @@ API.interceptors.request.use((config) => {
 API.interceptors.response.use(
   (response) => response,
   (error) => {
+    if (!error.response) {
+      console.error('API network error', {
+        baseURL: API.defaults.baseURL,
+        requestUrl: error.config?.url,
+        message: error.message,
+      });
+    }
+
     if (error.response?.status === 401) {
       localStorage.removeItem('protech_token');
       localStorage.removeItem('protech_user');
