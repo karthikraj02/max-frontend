@@ -34,6 +34,7 @@ app.use(cors({
   },
   credentials: true,
 }));
+app.options('*', cors());
 
 // ================= DATABASE CONNECTION (FIXED) =================
 let cachedConnection = null;
@@ -121,6 +122,12 @@ app.use(express.urlencoded({ extended: true }));
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
+if (process.env.NODE_ENV !== 'production') {
+  app.use((req, res, next) => {
+    console.log('[DEV REQ]', req.method, req.originalUrl, req.headers.origin || '');
+    next();
+  });
+}
 
 // ================= STATIC FILES =================
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
@@ -157,6 +164,11 @@ app.get('/', (req, res) => {
       payment: '/api/payment'
     }
   });
+});
+
+// Temporary debug route for API request diagnostics. Remove before production release.
+app.all('/api/debug/*', (req, res) => {
+  res.json({ method: req.method, path: req.originalUrl });
 });
 
 // ================= API ROUTES =================
